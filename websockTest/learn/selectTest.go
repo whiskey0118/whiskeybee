@@ -34,8 +34,8 @@ func main() {
 		fmt.Println("ch1 case...")
 	case <-ch2:
 		fmt.Println("ch2 case...")
-	default:
-		fmt.Println("default go...")
+		//default:
+		//	fmt.Println("default go...")
 	}
 
 }

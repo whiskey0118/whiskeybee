@@ -7,12 +7,30 @@ type TestController struct {
 	name string
 }
 
-func (this *TestController) Get() {
+func (c *TestController) Get() {
 
-	result := make(map[string]string)
+	result := make(map[string]interface{})
 	result["flag"] = "successful"
 	result["code"] = "200"
 
-	this.Data["json"] = result
-	this.ServeJSON()
+	c.Data["json"] = result
+	c.ServeJSON()
+}
+
+func (c TestController) SessionTest() {
+	result := make(map[string]interface{})
+	//result["flag"] = "successful"
+	//result["code"] = "200"
+	//
+	//v := c.GetSession("asta")
+	//if v ==nil{
+	//	c.SetSession("asta", int(1))
+	//	result["num"] = 0
+	//} else {
+	//	c.SetSession("asta",v.(int)+1)
+	//	result["num"] = v.(int)
+	//}
+	c.Data["json"] = result
+	c.ServeJSON()
+
 }
