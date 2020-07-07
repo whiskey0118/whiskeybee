@@ -17,21 +17,10 @@ type User struct {
 	Role                   int16     `orm:"column(role)"`
 	FromLdap               int16     `orm:"column(from_ldap)"`
 	Status                 int16     `orm:"column(status)"`
-	CreatedAt              time.Time `orm:"column(created_at);type(datetime)"`
-	UpdatedAt              time.Time `orm:"column(updated_at);type(datetime)"`
-	Realname               string    `orm:"column(realname);size(32)"`
+	CreatedTime            time.Time `orm:"column(created_at);type(datetime)"`
+	UpdatedTime            time.Time `orm:"column(updated_at);type(datetime)"`
 }
 
-func (t *User) TableName() string {
-	return "user"
-}
-
-func Connect() {
-	//dbUser := beego.AppConfig.String("mysqluser")
-	//dbPass := beego.AppConfig.String("mysqlpass")
-	//dbHost := beego.AppConfig.String("mysqlhost")
-	//dbPort := beego.AppConfig.String("mysqlport")
-	//dbName := beego.AppConfig.String("mysqldb")
-	//dbLink := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8", dbUser, dbPass, dbHost, dbPort, dbName) + "&loc=Asia%2FShanghai"
+func (u *User) CreateUser() {
 
 }

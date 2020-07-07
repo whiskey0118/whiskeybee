@@ -5,6 +5,7 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql"
+	"log"
 	"os"
 	_ "whiskeybee/routers"
 )
@@ -27,7 +28,7 @@ func init() {
 	//orm.RegisterModel(new(UserTest))
 	err := orm.RegisterDriver("mysql", orm.DRMySQL)
 	if err != nil {
-		beego.Error("err", err)
+		log.Fatal("err", err)
 		os.Exit(2)
 		return
 	}

@@ -1,10 +1,13 @@
 package controllers
 
-import "github.com/astaxie/beego"
+import (
+	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/orm"
+	"whiskeybee/models"
+)
 
 type TestController struct {
 	beego.Controller
-	name string
 }
 
 func (c *TestController) Get() {
@@ -17,20 +20,30 @@ func (c *TestController) Get() {
 	c.ServeJSON()
 }
 
-func (c TestController) SessionTest() {
+func (c *TestController) SessionTest() {
 	result := make(map[string]interface{})
-	//result["flag"] = "successful"
-	//result["code"] = "200"
-	//
-	//v := c.GetSession("asta")
-	//if v ==nil{
-	//	c.SetSession("asta", int(1))
-	//	result["num"] = 0
-	//} else {
-	//	c.SetSession("asta",v.(int)+1)
-	//	result["num"] = v.(int)
-	//}
+	if c.Ctx.GetCookie("user") == "" {
+		c.Ctx.SetCookie("user", "admin")
+		c.Ctx.WriteString("cookie set successful")
+	}
 	c.Data["json"] = result
 	c.ServeJSON()
 
+}
+func (c *TestController) UserTest() {
+	result := make(map[string]interface{})
+	o := orm.NewOrm()
+	user := new(models.User)
+
+	user.Id = 1
+	user.Email = "test@admin.com"
+	user.PasswordHash = "test"
+	id, err := o.Insert(user)
+	if err != nil {
+		result["id"] = id
+		result["err"] = err
+	}
+
+	c.Data["json"] = result
+	c.ServeJSON()
 }

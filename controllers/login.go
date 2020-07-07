@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"github.com/astaxie/beego"
-	"whiskeybee/models"
 )
 
 type LoginControler struct {
@@ -10,8 +9,8 @@ type LoginControler struct {
 }
 
 func (c *LoginControler) Get() {
-	user := models.GetUser()
-	c.Data["json"] = user
+	result := make(map[string]interface{})
+	c.Data["json"] = result
 	c.ServeJSON()
 
 }
