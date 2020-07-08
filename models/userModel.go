@@ -1,6 +1,7 @@
 package models
 
 import (
+	"github.com/astaxie/beego/orm"
 	"time"
 )
 
@@ -13,7 +14,6 @@ type User struct {
 	PasswordResetToken     string    `orm:"column(password_reset_token);size(255);null"`
 	EmailConfirmationToken string    `orm:"column(email_confirmation_token);size(255);null"`
 	Email                  string    `orm:"column(email);size(255)"`
-	Avatar                 string    `orm:"column(avatar);size(100);null"`
 	Role                   int16     `orm:"column(role)"`
 	FromLdap               int16     `orm:"column(from_ldap)"`
 	Status                 int16     `orm:"column(status)"`
@@ -21,6 +21,12 @@ type User struct {
 	UpdatedTime            time.Time `orm:"column(updated_at);type(datetime)"`
 }
 
-func (u *User) CreateUser() {
+func init() {
+	orm.RegisterModel(new(User))
+}
 
+func (u *User) InsertUser() (int64, error) {
+	o := orm.NewOrm()
+	id, err := o.Insert(u)
+	return id, err
 }

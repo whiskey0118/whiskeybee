@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/orm"
+	"time"
 	"whiskeybee/models"
 )
 
@@ -32,16 +32,23 @@ func (c *TestController) SessionTest() {
 }
 func (c *TestController) UserTest() {
 	result := make(map[string]interface{})
-	o := orm.NewOrm()
-	user := new(models.User)
+	var user models.User
 
-	user.Id = 1
+	user.Id = 2
 	user.Email = "test@admin.com"
 	user.PasswordHash = "test"
-	id, err := o.Insert(user)
+	user.Username = "whiskey"
+	user.CreatedTime = time.Now()
+	user.UpdatedTime = time.Now()
+	user.Role = 1
+	id, err := user.InsertUser()
 	if err != nil {
 		result["id"] = id
 		result["err"] = err
+		result["flag"] = "fail"
+	} else {
+		result["id"] = id
+		result["flag"] = "successful"
 	}
 
 	c.Data["json"] = result
