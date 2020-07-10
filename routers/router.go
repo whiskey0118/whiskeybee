@@ -10,4 +10,5 @@ func init() {
 	beego.Router("/test", &controllers.TestController{}, "*:Get")
 	beego.Router("/test1", &controllers.TestController{}, "*:SessionTest")
 	beego.Router("/user", &controllers.TestController{}, "*:UserTest")
+	beego.Router("/searchUser", &controllers.LoginControler{}, "*:SearchUser")
 }

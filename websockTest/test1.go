@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"whiskeybee/tools"
+	"math/rand"
 )
 
 func main() {
-	fmt.Println(tools.HashTool("haha"))
+	a := rand.Float64()
+	fmt.Println(a)
 }

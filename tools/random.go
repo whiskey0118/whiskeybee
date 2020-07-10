@@ -11,3 +11,7 @@ func HashTool(s string) string {
 	res := fmt.Sprintf("%x", str.Sum(nil))
 	return res
 }
+
+func GenerateRandom() {
+
+}

@@ -30,3 +30,11 @@ func (u *User) InsertUser() (int64, error) {
 	id, err := o.Insert(u)
 	return id, err
 }
+
+func (u *User) FindUserByName(username string) bool {
+	o := orm.NewOrm()
+	qs := o.QueryTable(u)
+	res := qs.Filter("username", username).Exist()
+
+	return res
+}
