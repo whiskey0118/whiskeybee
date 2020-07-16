@@ -5,30 +5,29 @@ import (
 	"whiskeybee/models"
 )
 
-type LoginControler struct {
+type LoginController struct {
 	beego.Controller
 }
 
-func (c *LoginControler) Login() {
+// @router / [get]
+func (c *LoginController) Login() {
 	result := make(map[string]interface{})
 	//username := c.GetString("username")
 	//password := c.GetString("password")
+	result["test"] = "testhjaha"
 
 	c.Data["json"] = result
 	c.ServeJSON()
 
 }
 
-func (c *LoginControler) Register() {
+func (c *LoginController) Register() {
 
 }
 
 //search username whether exist
-func (c *LoginControler) SearchUser(user models.User) {
+func (c *LoginController) SearchUser(user models.User) {
 	result := make(map[string]interface{})
-	//o := orm.NewOrm()
-	//qs := o.QueryTable(user)
-	//result["flag"] = qs.Filter("username",c.GetString("username")).Exist()
 	username := c.GetString("username")
 	result["flag"] = user.FindUserByName(username)
 

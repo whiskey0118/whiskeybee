@@ -16,6 +16,8 @@ func (c *TestController) Get() {
 	result["flag"] = "successful"
 	result["code"] = "200"
 
+	beego.parse
+
 	c.Data["json"] = result
 	c.ServeJSON()
 }

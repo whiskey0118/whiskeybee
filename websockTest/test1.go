@@ -8,4 +8,6 @@ import (
 func main() {
 	a := rand.Float64()
 	fmt.Println(a)
+
+	//controllers.LoginController{}
 }

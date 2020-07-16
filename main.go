@@ -47,6 +47,11 @@ func main() {
 	//
 	//err := o.Read(&user)
 	//fmt.Println("aaa", err, user.Name, user.Age)
+	if beego.BConfig.RunMode == "dev" {
+		beego.BConfig.WebConfig.DirectoryIndex = true
+		beego.BConfig.WebConfig.StaticDir["/swagger"] = "swagger"
+
+	}
 
 	beego.Run()
 }
