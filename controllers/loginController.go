@@ -26,8 +26,11 @@ func (c *LoginController) Register() {
 }
 
 //search username whether exist
-func (c *LoginController) SearchUser(user models.User) {
+func (c *LoginController) SearchUser() {
 	result := make(map[string]interface{})
+	var (
+		user models.User
+	)
 	username := c.GetString("username")
 	result["flag"] = user.FindUserByName(username)
 
