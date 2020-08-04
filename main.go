@@ -53,5 +53,8 @@ func main() {
 
 	}
 
+	//开启session
+	beego.BConfig.WebConfig.Session.SessionOn = true
+
 	beego.Run()
 }

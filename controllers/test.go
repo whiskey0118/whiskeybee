@@ -22,6 +22,7 @@ func (c *TestController) Get() {
 
 func (c *TestController) SessionTest() {
 	result := make(map[string]interface{})
+
 	if c.Ctx.GetCookie("user") == "" {
 		c.Ctx.SetCookie("user", "admin")
 		c.Ctx.WriteString("cookie set successful")

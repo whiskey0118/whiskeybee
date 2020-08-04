@@ -12,9 +12,16 @@ type LoginController struct {
 // @router / [get]
 func (c *LoginController) Login() {
 	result := make(map[string]interface{})
-	//username := c.GetString("username")
-	//password := c.GetString("password")
-	result["test"] = "testhjaha"
+	v := c.GetSession("asta")
+	if v == nil {
+		c.SetSession("asta", int(1))
+		result["num"] = 0
+		result["session"] = c.GetSession("asta")
+	} else {
+		c.SetSession("asta", v.(int)+1)
+		result["num"] = v.(int)
+		result["session"] = c.GetSession("asta")
+	}
 
 	c.Data["json"] = result
 	c.ServeJSON()
