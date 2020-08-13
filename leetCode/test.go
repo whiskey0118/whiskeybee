@@ -1,6 +1,14 @@
 package main
 
+import (
+	"crypto/md5"
+	"fmt"
+)
+
 func main() {
+
+	fmt.Printf("%x  %x\n", md5.Sum([]byte("what")), "我")
+	fmt.Printf("%x", "what")
 
 }
 

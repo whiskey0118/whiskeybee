@@ -12,6 +12,7 @@ func init() {
 	beego.Router("/test1", &controllers.TestController{}, "*:SessionTest")
 	beego.Router("/user", &controllers.TestController{}, "*:UserTest")
 	beego.Router("/searchUser", &controllers.LoginController{}, "*:SearchUser")
+	beego.Router("/register", &controllers.RegisterController{}, "*:Register")
 
 	//beego.Router("/test", &controllers.TestController{}, "*:Get")
 	//ns := beego.NewNamespace("/v1",

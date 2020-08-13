@@ -20,7 +20,7 @@ func (c *LoginController) Login() {
 	if !userExist {
 		result["result"] = "authentication fail"
 	} else {
-
+		pass := c.GetString("password")
 	}
 
 	c.Data["json"] = &result
@@ -30,18 +30,6 @@ func (c *LoginController) Login() {
 func (c *LoginController) LoginInfo() {
 	result := make(map[string]interface{})
 	result["result"] = "authentication failure, please login"
-	c.Data["json"] = &result
-	c.ServeJSON()
-}
-
-func (c *LoginController) Register() {
-	result := make(map[string]interface{})
-	var (
-		u models.User
-	)
-
-	u.Username = c.Ctx.XSRFToken()
-
 	c.Data["json"] = &result
 	c.ServeJSON()
 }
