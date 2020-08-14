@@ -1,7 +1,11 @@
 package controllers
 
 import (
+	"crypto/md5"
+	"fmt"
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/orm"
+	"log"
 	"whiskeybee/models"
 )
 
@@ -15,12 +19,28 @@ func (c *LoginController) Login() {
 	var (
 		user models.User
 	)
-	username := c.GetString("username")
-	userExist := user.FindUserByName(username)
-	if !userExist {
-		result["result"] = "authentication fail"
+
+	user.Username = c.GetString("username")
+	err := user.FindUserByName()
+	if err == orm.ErrNoRows {
+		result["result"] = "账号或密码错误"
+	} else if err == orm.ErrMultiRows {
+		result["result"] = "用户名重复"
+		log.Fatal("数据库字段重复")
 	} else {
-		pass := c.GetString("password")
+		//账号是否被锁定
+		if true {
+			result["result"] = "账号被锁定"
+		} else {
+			password := c.GetString("password")
+			tempHash := fmt.Sprintf("%x", md5.Sum([]byte(password+user.Salt)))
+			if tempHash == user.PasswordHash {
+				result["result"] = "login successful"
+			} else {
+				//密码错误计数器
+				result["result"] = "账号或密码错误"
+			}
+		}
 	}
 
 	c.Data["json"] = &result
@@ -41,7 +61,7 @@ func (c *LoginController) SearchUser() {
 		user models.User
 	)
 	username := c.GetString("username")
-	result["flag"] = user.FindUserByName(username)
+	result["flag"] = user.FindUserByNameExist(username)
 
 	c.Data["json"] = result
 	c.ServeJSON()

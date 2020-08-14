@@ -9,7 +9,7 @@ type User struct {
 	Id                     int       `orm:"column(id);auto"`
 	Username               string    `orm:"column(username);size(255)"`
 	IsEmailVerified        int8      `orm:"column(is_email_verified)"`
-	AuthKey                string    `orm:"column(auth_key);size(32)"`
+	Salt                   string    `orm:"column(salt);size(32)"`
 	PasswordHash           string    `orm:"column(password_hash);size(255)"`
 	PasswordResetToken     string    `orm:"column(password_reset_token);size(255);null"`
 	EmailConfirmationToken string    `orm:"column(email_confirmation_token);size(255);null"`
@@ -31,10 +31,15 @@ func (u *User) InsertUser() (int64, error) {
 	return id, err
 }
 
-func (u *User) FindUserByName(username string) bool {
+func (u *User) FindUserByNameExist(username string) bool {
 	o := orm.NewOrm()
 	qs := o.QueryTable(u)
 	res := qs.Filter("username", username).Exist()
-
 	return res
+}
+
+func (u *User) FindUserByName() error {
+	o := orm.NewOrm()
+	err := o.QueryTable("user").Filter("username", u.Username).One(u)
+	return err
 }
