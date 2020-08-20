@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"github.com/astaxie/beego/orm"
 	"time"
 )
@@ -42,4 +43,20 @@ func (u *User) FindUserByName() error {
 	o := orm.NewOrm()
 	err := o.QueryTable("user").Filter("username", u.Username).One(u)
 	return err
+}
+
+func (u *User) FindUserExistRaw() (bool, error) {
+	o := orm.NewOrm()
+	var username []string
+	var email []string
+
+	query := fmt.Sprintf("SELECT username,email FROM user where username='%s' or email='%s'", u.Username, u.Email)
+	num, err := o.Raw(query).QueryRows(&username, &email)
+	if err != nil {
+		return true, err
+	} else if num > 0 {
+		return true, nil
+	} else {
+		return false, nil
+	}
 }

@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"github.com/astaxie/beego"
 	"time"
 	"whiskeybee/models"
@@ -13,22 +14,31 @@ type TestController struct {
 func (c *TestController) Get() {
 
 	result := make(map[string]interface{})
-	result["flag"] = "successful"
-	result["code"] = "200"
+	var user models.User
+	user.Username = c.GetString("username")
+	user.Email = c.GetString("email")
+	num, err := user.FindUserExistRaw()
 
-	c.Data["json"] = result
+	if err != nil {
+		result["err"] = err
+	} else {
+		result["numType"] = fmt.Sprintf("%T", num)
+		result["num"] = num
+	}
+
+	c.Data["json"] = &result
 	c.ServeJSON()
 }
 
 func (c *TestController) SessionTest() {
-	result := make(map[string]interface{})
-
-	if c.Ctx.GetCookie("user") == "" {
-		c.Ctx.SetCookie("user", "admin")
-		c.Ctx.WriteString("cookie set successful")
+	jsoninfo := c.GetString("jsoninfo")
+	if jsoninfo == "" {
+		c.Ctx.WriteString("jsoninfo is empty")
+		return
+	} else {
+		c.Ctx.WriteString(jsoninfo)
+		return
 	}
-	c.Data["json"] = result
-	c.ServeJSON()
 
 }
 func (c *TestController) UserTest() {

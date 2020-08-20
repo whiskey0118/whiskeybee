@@ -1,24 +1,17 @@
 package main
 
-import (
-	"crypto/md5"
-	"fmt"
-)
+import "fmt"
 
 func main() {
 
-	fmt.Printf("%x  %x\n", md5.Sum([]byte("what")), "我")
-	fmt.Printf("%x", "what")
+	//b := make([]byte,10)
+	//_,err := rand.Read(b)
+	//if err != nil {
+	//	fmt.Println("error",err)
+	//	return
+	//}
+	//fmt.Println(bytes.Equal(b,make([]byte,10)))
+	a := fmt.Sprintf("SELECT username,email FROM user where username='%s' or email='%s'", "whiskey", "funny")
+	fmt.Println(a)
 
 }
-
-//func thirdMax(nums []int) int {
-//	if len(nums) >3 {
-//		if nums[0] <nums[1] {
-//			return nums[1]
-//		}
-//	}
-//
-//
-//
-//}

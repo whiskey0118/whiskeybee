@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/context"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql"
 	"log"
@@ -57,14 +56,14 @@ func main() {
 	//开启session
 	beego.BConfig.WebConfig.Session.SessionOn = true
 
-	var FilterUser = func(ctx *context.Context) {
-		_, ok := ctx.Input.Session("username").(int)
-		if !ok && ctx.Request.RequestURI != "/login" && ctx.Request.RequestURI != "/loginInfo" && ctx.Request.RequestURI != "register" {
-			ctx.Redirect(302, "/loginInfo")
-		}
-	}
-
-	beego.InsertFilter("/*", beego.BeforeRouter, FilterUser)
+	//开启登录过滤
+	//var FilterUser = func(ctx *context.Context) {
+	//	_, ok := ctx.Input.Session("username").(int)
+	//	if !ok && ctx.Request.RequestURI != "/login" && ctx.Request.RequestURI != "/loginInfo" && ctx.Request.RequestURI != "register" {
+	//		ctx.Redirect(302, "/loginInfo")
+	//	}
+	//}
+	//beego.InsertFilter("/*", beego.BeforeRouter, FilterUser)
 
 	beego.Run()
 }
