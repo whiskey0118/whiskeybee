@@ -17,7 +17,7 @@ func HashTool(s string) string {
 
 //Generate a random form rand/Rand package.
 //Change number n to set random lengths,default 16
-func GenerateRandom() ([]byte, error) {
+func GenerateRandom() (string, error) {
 	n := 16
 	bslice := make([]byte, n)
 	_, err := rand.Read(bslice)
@@ -27,9 +27,10 @@ func GenerateRandom() ([]byte, error) {
 
 	if bytes.Equal(bslice, make([]byte, n)) {
 		err = fmt.Errorf("generate random error, random only zeroes")
-		return bslice, err
+		return "", err
 	} else {
 		err = nil
-		return bslice, err
+		str := fmt.Sprintf("%x", bslice)
+		return str, err
 	}
 }

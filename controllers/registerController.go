@@ -1,8 +1,10 @@
 package controllers
 
 import (
-	"encoding/json"
 	"github.com/astaxie/beego"
+	"log"
+	"whiskeybee/models"
+	"whiskeybee/tools"
 )
 
 type RegisterController struct {
@@ -11,18 +13,23 @@ type RegisterController struct {
 
 func (c *RegisterController) Register() {
 	result := make(map[string]interface{})
-	data := map[string]interface{}{"username": ""}
 	var (
-		err error
+		user models.User
+		err  error
 	)
 
-	if err = json.Unmarshal(c.Ctx.Input.RequestBody, &data); err != nil {
-
-		result["user"] = data
-		result["body"] = c.Ctx.Input.RequestBody
-	} else {
-		result["err"] = err
+	user.Username = c.GetString("username")
+	user.Email = c.GetString("email")
+	user.IsEmailVerified = 0
+	user.Salt, err = tools.GenerateRandom()
+	if err != nil {
+		log.Fatal("generate salt fail")
+		return
 	}
+	//user.PasswordHash = sha1.New().Write([]byte("sdf"))
+	user.Role = 0
+	user.FromLdap = 0
+	user.Status = 0
 
 	c.Data["json"] = result
 	c.ServeJSON()
