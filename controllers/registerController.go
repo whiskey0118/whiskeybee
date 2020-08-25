@@ -20,6 +20,16 @@ func (c *RegisterController) Register() {
 
 	user.Username = c.GetString("username")
 	user.Email = c.GetString("email")
+	exist, err := user.FindUserExistRaw()
+	if err != nil {
+		result["result"] = "error"
+		log.Fatal(err)
+		return
+	}
+	if exist {
+		result["result"] = "username or email is exist"
+		return
+	}
 	user.IsEmailVerified = 0
 	user.Salt, err = tools.GenerateRandom()
 	if err != nil {
