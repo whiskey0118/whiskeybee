@@ -15,9 +15,9 @@ type User struct {
 	PasswordResetToken     string    `orm:"column(password_reset_token);size(255);null"`
 	EmailConfirmationToken string    `orm:"column(email_confirmation_token);size(255);null"`
 	Email                  string    `orm:"column(email);size(255)"`
-	Role                   int16     `orm:"column(role)"`
+	Role                   string    `orm:"column(role)"`
 	FromLdap               int16     `orm:"column(from_ldap)"`
-	Status                 int16     `orm:"column(status)"`
+	Status                 string    `orm:"column(status)"`
 	CreatedTime            time.Time `orm:"column(created_at);type(datetime)"`
 	UpdatedTime            time.Time `orm:"column(updated_at);type(datetime)"`
 }

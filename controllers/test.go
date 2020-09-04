@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"fmt"
+	"context"
 	"github.com/astaxie/beego"
 	"time"
 	"whiskeybee/models"
@@ -14,17 +14,9 @@ type TestController struct {
 func (c *TestController) Get() {
 
 	result := make(map[string]interface{})
-	var user models.User
-	user.Username = c.GetString("username")
-	user.Email = c.GetString("email")
-	num, err := user.FindUserExistRaw()
-
-	if err != nil {
-		result["err"] = err
-	} else {
-		result["numType"] = fmt.Sprintf("%T", num)
-		result["num"] = num
-	}
+	var (
+		ctx = context.Background()
+	)
 
 	c.Data["json"] = &result
 	c.ServeJSON()
@@ -51,7 +43,7 @@ func (c *TestController) UserTest() {
 	user.Username = "whiskey"
 	user.CreatedTime = time.Now()
 	user.UpdatedTime = time.Now()
-	user.Role = 1
+	user.Role = ""
 	id, err := user.InsertUser()
 	if err != nil {
 		result["id"] = id

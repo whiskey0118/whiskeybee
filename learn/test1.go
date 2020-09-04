@@ -7,7 +7,10 @@ import (
 
 func main() {
 
-	fmt.Println(time.Now())
+	ch1 := time.After(1 * time.Second)
+	for i := 0; i < 10; i++ {
+		fmt.Println("time: ", <-ch1)
+		i = i + 1
+	}
 
-	//controllers.LoginController{}
 }

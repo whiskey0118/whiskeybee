@@ -35,6 +35,7 @@ func (c *LoginController) Login() {
 			password := c.GetString("password")
 			tempHash := fmt.Sprintf("%x", md5.Sum([]byte(password+user.Salt)))
 			if tempHash == user.PasswordHash {
+
 				result["result"] = "login successful"
 			} else {
 				//密码错误计数器
