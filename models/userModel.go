@@ -22,6 +22,12 @@ type User struct {
 	UpdatedTime            time.Time `orm:"column(updated_at);type(datetime)"`
 }
 
+type UserRd struct {
+	Username        string
+	LoginErrorTimes int
+	Status          string
+}
+
 func init() {
 	orm.RegisterModel(new(User))
 }

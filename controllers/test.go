@@ -1,10 +1,11 @@
 package controllers
 
 import (
-	"context"
+	"encoding/json"
 	"github.com/astaxie/beego"
 	"time"
 	"whiskeybee/models"
+	"whiskeybee/tools"
 )
 
 type TestController struct {
@@ -14,10 +15,16 @@ type TestController struct {
 func (c *TestController) Get() {
 
 	result := make(map[string]interface{})
-	var (
-		ctx = context.Background()
-	)
+	ud := models.UserRd{
+		Username:        "test",
+		LoginErrorTimes: 0,
+		Status:          "lock",
+	}
 
+	uds, _ := json.Marshal(ud)
+	tools.RedisConn.Set("user", string(uds), 30*time.Minute)
+	result["res"] = "haha"
+	result["uds"] = tools.RedisConn.Get("user").Val()
 	c.Data["json"] = &result
 	c.ServeJSON()
 }

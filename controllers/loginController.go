@@ -29,6 +29,7 @@ func (c *LoginController) Login() {
 		log.Fatal("数据库字段重复")
 	} else {
 		//账号是否被锁定
+		//tools.RedisConn.Get("UserRd")
 		if true {
 			result["result"] = "账号被锁定"
 		} else {
