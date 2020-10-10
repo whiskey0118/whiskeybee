@@ -4,6 +4,7 @@ import (
 	"crypto/sha1"
 	"fmt"
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/utils"
 	"log"
 	"regexp"
 	"time"
@@ -78,4 +79,26 @@ func IsEmail(str ...string) bool {
 		}
 	}
 	return b
+}
+
+func SendEmail() error {
+	config := `{"username":"1043374586@qq.com","password":"bvlgboktybivbfdc","host":"smtp.qq.com","port":587}`
+	email := utils.NewEMail(config)
+	email.To = []string{"243495484@qq.com"}
+	email.From = "1043374586@qq.com"
+	email.Text = "this is beego test"
+	err := email.Send()
+	return err
+}
+
+func (c *RegisterController) RegisterTest() {
+	result := make(map[string]interface{})
+	err := SendEmail()
+	if err != nil {
+		result["err"] = err
+	} else {
+		result["flag"] = "success"
+	}
+	c.Data["json"] = &result
+	c.ServeJSON()
 }

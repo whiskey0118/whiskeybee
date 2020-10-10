@@ -6,7 +6,10 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	"log"
+	"net/http"
+	"time"
 	"whiskeybee/models"
+	"whiskeybee/tools/helper"
 )
 
 type LoginController struct {
@@ -66,5 +69,13 @@ func (c *LoginController) SearchUser() {
 	result["flag"] = user.FindUserByNameExist(username)
 
 	c.Data["json"] = result
+	c.ServeJSON()
+}
+
+func (c *LoginController) GetUTCTime() {
+	result := make(map[string]interface{})
+	result["flag"] = helper.SuccessFlag
+	result["time"] = time.Now().UTC().Format(http.TimeFormat)
+	c.Data["json"] = &result
 	c.ServeJSON()
 }
